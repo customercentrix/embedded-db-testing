@@ -1,35 +1,34 @@
 import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Random;
 
 
 public class MapDbKey implements Serializable, Comparable
 {
+	private String[] DOMAIN_NAMES = {"google.com", "facebook.com", "yahoo.com", "stackoverflow.com", 
+			"vaadin.com", "oracle.com", "twitter.com", "ebay.com", "unm.edu", "youtube.com"};
 	private Long CURRENT_TIME = System.currentTimeMillis();
 	private String sourceString;
 	private String hashString;
-	
+
 	public MapDbKey()
 	{
-		sourceString = "test domain";
-		hashString = calculateHash(sourceString);
-	}
-	
-	public String calculateHash(String input)
-	{
-		try
+		Long randomLong = (long) 0;
+		Random random = new Random();
+
+		for (int i = 0; i < 19; i++)
 		{
-			MessageDigest md = MessageDigest.getInstance("MD5");
-			hashString = md.digest(input.getBytes()).toString();
-			return hashString;
+			long numberToAdd = (long) (random.nextInt(10) * Math.pow(10, i));
+			randomLong = randomLong + numberToAdd;
+			if (numberToAdd == 0)
+				randomLong = randomLong * 10;
 		}
-		catch (NoSuchAlgorithmException e)
-		{
-			e.printStackTrace();
-			return null;
-		}
+		
+		sourceString = DOMAIN_NAMES[random.nextInt(10)];
+		hashString = randomLong.toString();
 	}
-	
+
 	public Long getCurrentTime()
 	{
 		return CURRENT_TIME;
@@ -58,11 +57,14 @@ public class MapDbKey implements Serializable, Comparable
 	@Override
 	public int compareTo(Object o)
 	{
-		if (o.toString().length() > sourceString.length())
-			return -1;
-		else if (o.toString().length() < sourceString.length())
+		//random comparison
+		Random random = new Random();
+		int compare = random.nextInt(2);
+		if (compare == 0)
+			return 0;
+		else if (compare == 1)
 			return 1;
-
-		return 0;
+		else
+			return -1;
 	}
 }

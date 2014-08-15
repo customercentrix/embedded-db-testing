@@ -1,4 +1,6 @@
 import java.io.Serializable;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.Random;
 
 
@@ -18,12 +20,12 @@ public class MapDbValue implements Serializable, Comparable
 		if (randomString == null)
 		{
 			Random random = new Random();
-			int randomNumber = random.nextInt((MAX_LENGTH - MIN_LENGTH) + 1) + MIN_LENGTH;
+			int randomLength = random.nextInt((MAX_LENGTH - MIN_LENGTH) + 1) + MIN_LENGTH;
 			
-			byte[] randomBytes = new byte[randomNumber];
-			random.nextBytes(randomBytes);
-			String randomString = new String(randomBytes);
-			
+			char[] randomChars = new char[randomLength];
+			Arrays.fill(randomChars, 'a');
+
+			randomString = new String(randomChars);
 			return randomString;
 		}
 		return randomString;
@@ -32,11 +34,14 @@ public class MapDbValue implements Serializable, Comparable
 	@Override
 	public int compareTo(Object o)
 	{
-		if (o.toString().length() > randomString.length())
-			return -1;
-		else if (o.toString().length() < randomString.length())
+		//random comparison
+		Random random = new Random();
+		int compare = random.nextInt(2);
+		if (compare == 0)
+			return 0;
+		else if (compare == 1)
 			return 1;
-
-		return 0;
+		else
+			return -1;
 	}
 }
