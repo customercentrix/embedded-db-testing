@@ -1,107 +1,63 @@
-Initial Results - MapDB Testing
-=====
+Goal is to find an embedded data store that is very easy to use in Java. It should be  
+reliable, durable and relatively high write volume with concurrent reads and writes. 
+The intent is to use this as a collection layer to receive metrics, logs and other time
+series data from EC2/GCE and other cloud VMs. It should not degrade significantly in 
+write volume with 100GB of file store.
 
-TEST 1 (Speed Test)
+Tests results are from Mac Pro machine with no special disk upgrades
 
-Total Items: 1508
-Total Time: 15 s
-Total Items per Second: 100
-Interval Items per Second: 100
+Looks like H2/MVStore is the winner with the caveat that it takes a lot more disk space (> 10x).
+6.5M entries in 5 minutes.
 
-Total Items: 3103
-Total Time: 30 s
-Total Items per Second: 103
-Interval Items per Second: 106
 
-Total Items: 4720
-Total Time: 45 s
-Total Items per Second: 104
-Interval Items per Second: 107
+--- MapDB ---
 
-Total Items: 6107
-Total Time: 60 s
-Total Items per Second: 101
-Interval Items per Second: 92
+Items: 7434
+Time: 60 s
+Items per second: 123
 
-Total Items: 7624
-Total Time: 75 s
-Total Items per Second: 101
-Interval Items per Second: 101
+Items: 15364
+Time: 120 s
+Items per second: 127
 
-Total Items: 9075
-Total Time: 90 s
-Total Items per Second: 100
-Interval Items per Second: 96
+Items: 22762
+Time: 180 s
+Items per second: 126
 
-Total Items: 10437
-Total Time: 105 s
-Total Items per Second: 99
-Interval Items per Second: 90
+Items: 29407
+Time: 240 s
+Items per second: 122
 
-Total Items: 11916
-Total Time: 120 s
-Total Items per Second: 99
-Interval Items per Second: 98
+Items: 36186
+Time: 300 s
+Items per second: 120
 
-Total Items: 13414
-Total Time: 135 s
-Total Items per Second: 99
-Interval Items per Second: 99
+File /Users/rogerc/embedded-db-testing/databases/MapDB-test.db, total file size: 1 MBs
+Average entry size: 28 bytes
 
-Total Items: 14820
-Total Time: 150 s
-Total Items per Second: 98
-Interval Items per Second: 93
 
-Total Items: 16374
-Total Time: 165 s
-Total Items per Second: 99
-Interval Items per Second: 103
+--- H2/MVStore ---
 
-Total Items: 17935
-Total Time: 180 s
-Total Items per Second: 99
-Interval Items per Second: 104
+Items: 1222217
+Time: 60 s
+Items per second: 20000
 
-Total Items: 19345
-Total Time: 195 s
-Total Items per Second: 99
-Interval Items per Second: 94
+Items: 2545467
+Time: 120 s
+Items per second: 21000
 
-Total Items: 20851
-Total Time: 210 s
-Total Items per Second: 99
-Interval Items per Second: 100
+Items: 3864985
+Time: 180 s
+Items per second: 21000
 
-Total Items: 22362
-Total Time: 225 s
-Total Items per Second: 99
-Interval Items per Second: 100
+Items: 5185749
+Time: 240 s
+Items per second: 21000
 
-Total Items: 23861
-Total Time: 240 s
-Total Items per Second: 99
-Interval Items per Second: 99
+Items: 6500824
+Time: 300 s
+Items per second: 21000
 
-Total Items: 25349
-Total Time: 255 s
-Total Items per Second: 99
-Interval Items per Second: 99
-
-Total Items: 26763
-Total Time: 270 s
-Total Items per Second: 99
-Interval Items per Second: 94
-
-Total Items: 28208
-Total Time: 285 s
-Total Items per Second: 98
-Interval Items per Second: 96
-
-Total Items: 29673
-Total Time: 300 s
-Total Items per Second: 98
-Interval Items per Second: 97
-
-Total file size: 47776 bytes
+File /Users/rogerc/embedded-db-testing/databases/H2-test.db, total file size: 1973 MBs
+Average entry size: 318 bytes
 
