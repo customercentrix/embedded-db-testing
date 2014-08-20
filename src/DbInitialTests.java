@@ -3,7 +3,8 @@
 import java.io.File;
 import java.util.concurrent.ConcurrentNavigableMap;
 
-import org.h2.mvstore.MVMap;
+import org.h2.mvstore.MVMapConcurrent;
+import org.h2.mvstore.MVMapConcurrent.Builder;
 import org.h2.mvstore.MVStore;
 import org.junit.Test;
 import org.mapdb.DB;
@@ -12,7 +13,7 @@ import org.mapdb.DBMaker;
 public class DbInitialTests
 {
 	private static final int RPT_INTERVAL_SECS = 60;
-	private static final Integer TEST_TIME_MS = 5 * 60 * 1000;
+	private static final Integer TEST_TIME_MS = 15 * 60 * 1000;
 	
 	
 	@Test
@@ -24,7 +25,8 @@ public class DbInitialTests
 				.compress()
 				.open();
 		
-		MVMap<DbKey, DbValue> testMap = h2store.openMap("aMap");
+		Builder<DbKey, DbValue> mapBuilder = new MVMapConcurrent.Builder<DbKey, DbValue>();
+		MVMapConcurrent<DbKey, DbValue> testMap = h2store.openMap("myMap", mapBuilder);
 
 		long startTime = System.currentTimeMillis();
 		int currentInterval = 0;
